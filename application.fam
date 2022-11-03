@@ -1,0 +1,12 @@
+App(
+    appid="uart_study",
+    name="uart_study",
+    apptype=FlipperAppType.PLUGIN,
+    entry_point="uart_study_app",
+    stack_size=1 * 1024,
+    cdefines=["UART_STUDY"],
+    requires=[
+        "gui",
+    ],
+    order=10,
+)
