@@ -1,4 +1,4 @@
-NAME = 
+NAME = uart_study
 
 FBT = ./fbt
 

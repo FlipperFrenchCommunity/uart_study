@@ -1,12 +1,14 @@
 /*
- * Project: Template
+ * Project: Apprentissage de l'UART
  * File: uart_study.c
  * Create by: Rom1 <rom1@canel.ch> - Flipper French Community - https://github.com/FlipperFrenchCommunity
  * Date: 26 octobre 2022
  * License: GNU GENERAL PUBLIC LICENSE v3
- * Description: Template pour créer une application FZ.
+ * Description: Découvrir le protocole UART
  */
 #include <furi.h>
+#include <furi_hal_uart.h>
+#include <furi_hal_console.h>
 #include <gui/gui.h>
 #include <input/input.h>
 #include <stdlib.h>
@@ -69,6 +71,14 @@ int32_t uart_study_app(void* p){
 
     UartStudyState* state = uart_study_alloc();
 
+    furi_hal_console_disable();
+    furi_hal_uart_set_br(FuriHalUartIdUSART1, 115200);
+    uint8_t data[4]
+    data[0] = 65;
+    data[1] = 66;
+    data[2] = 67;
+    data[3] = 68;
+
     InputEvent event;
     for(bool processing=true ; processing ; ){
         FuriStatus event_status = furi_message_queue_get(state->event_queue,
@@ -84,6 +94,8 @@ int32_t uart_study_app(void* p){
                     case InputKeyLeft:
                     case InputKeyRight:
                     case InputKeyOk:
+                        furi_hal_uart_tx(FuriHalUartIdUSART1, data, 4);
+                        break;
                     case InputKeyBack:
                         processing = false;
                         break;
@@ -93,6 +105,8 @@ int32_t uart_study_app(void* p){
         furi_mutex_release(state->model_mutex);
         view_port_update(state->view_port);
     }
+
+    furi_hal_console_enable();
 
     uart_study_free(state);
     return 0;

@@ -1,4 +1,4 @@
-# Flipper Zero - Template
+# Flipper Zero - Apprentissage de l'UART
 ## But
 Une Structure de départ simple pour faire une application pour le Flipper Zero
 
